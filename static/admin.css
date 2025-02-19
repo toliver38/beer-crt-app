@@ -1,0 +1,78 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	background: #f0f0f0;
+	font-size: 1em;
+	line-height: 1.5;
+	color: #333;
+	font-family: Arial, sans-serif;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+.container {
+	margin: 20px auto;
+	padding: 20px;
+	max-width: 900px;
+	background: #fff;
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	text-align: center;
+	overflow-y: auto;
+	max-height: calc(100vh - 40px);
+}
+#logo {
+	text-align: center;
+	margin-bottom: 10px;
+}
+#logo object {
+	width: 100px;
+	height: 100px;
+}
+h1, h2 {
+	margin-bottom: 20px;
+	font-size: 1.5em;
+	color: #444;
+}
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+th, td {
+	padding: 8px;
+	text-align: center;
+	border-bottom: 1px solid #ccc;
+}
+th {
+	background: #eee;
+	color: #555;
+}
+input[type="text"], input[type="submit"] {
+	padding: 8px 12px;
+	margin: 5px;
+	background: #ddd;
+	color: #333;
+	border: none;
+	cursor: pointer;
+}
+a {
+	color: #333;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+	h1, h2 {
+		font-size: 1.2em;
+	}
+	table, th, td {
+		font-size: 0.8em;
+	}
+	input[type="text"], input[type="submit"] {
+		font-size: 0.8em;
+		padding: 6px 10px;
+	}
+}

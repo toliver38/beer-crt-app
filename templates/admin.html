@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel - Beer Menu</title>
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+  <div class="container" style="overflow-y: auto; width: 100%;">
+    <!-- Logo inside container -->
+    <div id="logo">
+      <object type="image/svg+xml" data="{{ url_for('static', filename='luck_anchor.svg') }}"></object>
+    </div>
+    <h1>Admin Panel - Manage Beer Menu<span class="cursor"></span></h1>
+    
+    <h2>Active Beers</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Category</th>
+          <th>Brewery</th>
+          <th>Beer</th>
+          <th>Style</th>
+          <th>ABV</th>
+          <th>Price (1/2)</th>
+          <th>Price (2/3)</th>
+          <th>Price (Pint)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for beer in beers if beer[7] == 1 %}
+        <tr id="row-{{ beer[0] }}" data-beer-id="{{ beer[0] }}">
+          <td class="editable order">{{ beer[8] }}</td>
+          <td class="editable category">{{ beer[9] }}</td>
+          <td class="editable brewery">{{ beer[1] }}</td>
+          <td class="editable beer">{{ beer[2] }}</td>
+          <td class="editable style">{{ beer[3] }}</td>
+          <td class="editable abv">{{ beer[4] }}</td>
+          <td class="editable price-half">{{ beer[5] }}</td>
+          <td class="editable price-two-third">{{ beer[6] }}</td>
+          <td class="editable price-pint">{{ beer[7] }}</td>
+          <td>
+            <button class="edit-btn" data-beer-id="{{ beer[0] }}">Edit</button>
+            <button class="save-btn" data-beer-id="{{ beer[0] }}" style="display:none;">Save</button>
+            <button class="cancel-btn" data-beer-id="{{ beer[0] }}" style="display:none;">Cancel</button>
+            <form action="{{ url_for('remove', beer_id=beer[0]) }}" method="post" style="display:inline;">
+              <input type="submit" value="Remove">
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    
+    <h2>Add New Beer</h2>
+    <form action="{{ url_for('add') }}" method="post" style="text-align: center;">
+      <input type="text" name="brewery" placeholder="Brewery" required>
+      <input type="text" name="beer" placeholder="Beer" required>
+      <input type="text" name="style" placeholder="Style" required>
+      <input type="text" name="abv" placeholder="ABV" required>
+      <input type="text" name="price_half" placeholder="Price (1/2)" required>
+      <input type="text" name="price_two_third" placeholder="Price (2/3)" required>
+      <input type="text" name="price_pint" placeholder="Price (Pint)" required>
+      <input type="text" name="display_order" placeholder="Order" required>
+      <input type="text" name="category" placeholder="Category">
+      <br>
+      <input type="submit" value="Add Beer">
+    </form>
+    
+    <h2>Restore Removed Beers</h2>
+    <form action="{{ url_for('search_removed') }}" method="get" style="text-align: center;">
+      <input type="text" name="q" placeholder="Search removed beers by keyword">
+      <input type="submit" value="Search">
+    </form>
+    
+    <div style="margin-top: 20px;">
+      <a href="{{ url_for('index') }}">Back to Beer Menu</a>
+    </div>
+  </div>
+  
+  <canvas id="noise"></canvas>
+  
+  <!-- Inline Editing Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      // When "Edit" is clicked, turn the row cells editable.
+      document.querySelectorAll('.edit-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(){
+          var beerId = btn.getAttribute('data-beer-id');
+          var row = document.getElementById('row-' + beerId);
+          row.querySelectorAll('.editable').forEach(function(cell) {
+            cell.setAttribute('data-original', cell.innerText);
+            cell.contentEditable = "true";
+            cell.style.border = "1px solid #f0f0f0";
+          });
+          row.querySelector('.edit-btn').style.display = "none";
+          row.querySelector('.save-btn').style.display = "inline-block";
+          row.querySelector('.cancel-btn').style.display = "inline-block";
+        });
+      });
+      
+      // Cancel inline editing and revert changes.
+      document.querySelectorAll('.cancel-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(){
+          var beerId = btn.getAttribute('data-beer-id');
+          var row = document.getElementById('row-' + beerId);
+          row.querySelectorAll('.editable').forEach(function(cell) {
+            cell.innerText = cell.getAttribute('data-original');
+            cell.contentEditable = "false";
+            cell.style.border = "none";
+          });
+          row.querySelector('.edit-btn').style.display = "inline-block";
+          row.querySelector('.save-btn').style.display = "none";
+          row.querySelector('.cancel-btn').style.display = "none";
+        });
+      });
+      
+      // Save inline changes via an AJAX (fetch) call.
+      document.querySelectorAll('.save-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(){
+          var beerId = btn.getAttribute('data-beer-id');
+          var row = document.getElementById('row-' + beerId);
+          var data = {
+            display_order: row.querySelector('.order').innerText.trim(),
+            category: row.querySelector('.category').innerText.trim(),
+            brewery: row.querySelector('.brewery').innerText.trim(),
+            beer: row.querySelector('.beer').innerText.trim(),
+            style: row.querySelector('.style').innerText.trim(),
+            abv: row.querySelector('.abv').innerText.trim(),
+            price_half: row.querySelector('.price-half').innerText.trim(),
+            price_two_third: row.querySelector('.price-two-third').innerText.trim(),
+            price_pint: row.querySelector('.price-pint').innerText.trim()
+          };
+          fetch('/api/edit/' + beerId, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          })
+          .then(response => response.json())
+          .then(result => {
+            if(result.status === "success"){
+              row.querySelectorAll('.editable').forEach(function(cell) {
+                cell.contentEditable = "false";
+                cell.style.border = "none";
+              });
+              row.querySelector('.edit-btn').style.display = "inline-block";
+              row.querySelector('.save-btn').style.display = "none";
+              row.querySelector('.cancel-btn').style.display = "none";
+            } else {
+              alert("Error saving changes: " + result.message);
+            }
+          })
+          .catch(error => { alert("Error: " + error); });
+        });
+      });
+    });
+  </script>
+  
+  <!-- Noise and Fuzzy Lines Script -->
+  <script>
+    (function() {
+      var canvas = document.getElementById('noise'),
+          ctx = canvas.getContext('2d'),
+          width, height, noiseData,
+          lineOffset = 0;
+      
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        noiseData = ctx.createImageData(width, height);
+      }
+      
+      window.addEventListener('resize', resize);
+      resize();
+      
+      function generateNoise() {
+        var buffer = new Uint32Array(noiseData.data.buffer);
+        for (var i = 0, len = buffer.length; i < len; i++) {
+          var gray = Math.random() * 255 | 0;
+          buffer[i] = (255 << 24) | (gray << 16) | (gray << 8) | gray;
+        }
+        ctx.putImageData(noiseData, 0, 0);
+      }
+      
+      function drawFuzzyLines() {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.03)";
+        ctx.fillRect(0, lineOffset, width, 2);
+        lineOffset = (lineOffset + 1) % height;
+      }
+      
+      function loop() {
+        generateNoise();
+        drawFuzzyLines();
+        requestAnimationFrame(loop);
+      }
+      loop();
+    })();
+  </script>
+</body>
+</html>

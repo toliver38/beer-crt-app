@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Restore Removed Beers - Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+  <div class="container">
+    <div id="logo">
+      <object type="image/svg+xml" data="{{ url_for('static', filename='luck_anchor.svg') }}"></object>
+    </div>
+    <h1>Restore Removed Beers<span class="cursor"></span></h1>
+    {% if removed_beers %}
+    <table>
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Category</th>
+          <th>Brewery</th>
+          <th>Beer</th>
+          <th>Style</th>
+          <th>ABV</th>
+          <th>Price (1/2)</th>
+          <th>Price (Pint)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for beer in removed_beers %}
+        <tr>
+          <td>{{ beer[7] }}</td>
+          <td>{{ beer[8] }}</td>
+          <td>{{ beer[1] }}</td>
+          <td>{{ beer[2] }}</td>
+          <td>{{ beer[3] }}</td>
+          <td>{{ beer[4] }}</td>
+          <td>{{ beer[5] }}</td>
+          <td>{{ beer[6] }}</td>
+          <td>
+            <form action="{{ url_for('restore', beer_id=beer[0]) }}" method="post" style="display:inline;">
+              <input type="submit" value="Restore">
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No removed beers found matching "{{ q }}"</p>
+    {% endif %}
+    <div style="margin-top: 20px;">
+      <a href="{{ url_for('admin') }}">Back to Admin Panel</a>
+    </div>
+  </div>
+  
+  <canvas id="noise"></canvas>
+  
+  <script>
+    (function() {
+      var canvas = document.getElementById('noise'),
+          ctx = canvas.getContext('2d'),
+          width, height, noiseData,
+          lineOffset = 0;
+      
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        noiseData = ctx.createImageData(width, height);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+      
+      function generateNoise() {
+        var buffer = new Uint32Array(noiseData.data.buffer);
+        for (var i = 0, len = buffer.length; i < len; i++) {
+          var gray = Math.random() * 255 | 0;
+          buffer[i] = (255 << 24) | (gray << 16) | (gray << 8) | gray;
+        }
+        ctx.putImageData(noiseData, 0, 0);
+      }
+      
+      function drawFuzzyLines() {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.03)";
+        ctx.fillRect(0, lineOffset, width, 2);
+        lineOffset = (lineOffset + 1) % height;
+      }
+      
+      function loop() {
+        generateNoise();
+        drawFuzzyLines();
+        requestAnimationFrame(loop);
+      }
+      loop();
+    })();
+  </script>
+</body>
+</html>

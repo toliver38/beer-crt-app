@@ -1,0 +1,20 @@
+[
+    ["Fuller's", "London Pride", "Bitter", "4.1%", "£3.50", "£4.00", "£4.50", 1, 1, "Ale", "Cask"],
+    ["BrewDog", "Punk IPA", "IPA", "5.6%", "£3.80", "£4.30", "£4.80", 1, 2, "Ale", "Draft"],
+    ["Adnams", "Southwold Bitter", "Bitter", "4.8%", "£3.60", "£4.10", "£4.60", 1, 3, "Ale", "Cask"],
+    ["Wychwood", "Hippopotamus", "Strong Bitter", "5.0%", "£3.70", "£4.20", "£4.70", 1, 4, "Ale", "Draft"],
+    ["Guinness", "Extra Stout", "Stout", "4.2%", "£3.80", "£4.30", "£4.80", 1, 5, "Stout", "Draft"],
+    ["Sierra Nevada", "Pale Ale", "Pale Ale", "5.6%", "£3.90", "£4.40", "£4.90", 1, 6, "Ale", "Draft"],
+    ["Lagunitas", "IPA", "IPA", "6.2%", "£4.00", "£4.50", "£5.00", 1, 7, "Ale", "Draft"],
+    ["Stone", "Arrogant Bastard", "Strong Ale", "7.2%", "£4.50", "£5.00", "£5.50", 1, 8, "Ale", "Draft"],
+    ["Founders", "All Day IPA", "Session IPA", "4.7%", "£3.70", "£4.20", "£4.70", 1, 9, "Ale", "Draft"],
+    ["Bell's", "Two Hearted Ale", "IPA", "7.0%", "£4.20", "£4.70", "£5.20", 1, 10, "Ale", "Draft"],
+    ["Dogfish Head", "60 Minute IPA", "IPA", "6.0%", "£4.00", "£4.50", "£5.00", 1, 11, "Ale", "Draft"],
+    ["New Belgium", "Fat Tire", "Amber Ale", "5.2%", "£3.80", "£4.30", "£4.80", 1, 12, "Ale", "Draft"],
+    ["Brooklyn", "Lager", "Lager", "5.2%", "£3.80", "£4.30", "£4.80", 1, 13, "Lager", "Draft"],
+    ["Sam Adams", "Boston Lager", "Lager", "5.0%", "£3.70", "£4.20", "£4.70", 1, 14, "Lager", "Draft"],
+    ["Blue Moon", "Belgian White", "Wheat Beer", "5.4%", "£3.90", "£4.40", "£4.90", 1, 15, "Wheat Beer", "Draft"],
+    ["Hoegaarden", "Witbier", "Wheat Beer", "4.9%", "£3.80", "£4.30", "£4.80", 1, 16, "Wheat Beer", "Draft"],
+    ["Leffe", "Blonde", "Belgian Ale", "6.6%", "£4.20", "£4.70", "£5.20", 1, 17, "Belgian Ale", "Draft"],
+    ["Chimay", "Blue", "Belgian Strong Ale", "9.0%", "£4.50", "£5.00", "£5.50", 1, 18, "Belgian Ale", "Draft"]
+]

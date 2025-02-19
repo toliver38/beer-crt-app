@@ -1,0 +1,182 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	background: #000;
+	font-size: 0.6em;
+	line-height: 1.2;
+	color: #fff;
+	font-family: "Press Start 2P", monospace;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+.container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	box-shadow: 0 0 10px rgba(255,255,255,0.1);
+	z-index: 1;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 20px;
+	box-sizing: border-box;
+}
+#logo {
+	text-align: center;
+	margin-bottom: 10px;
+}
+#logo object {
+	width: 50px;
+	height: 50px;
+}
+h1, h2 {
+	margin-bottom: 10px;
+	font-size: 1.5vw;
+	color: #fff;
+}
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 10px;
+}
+th, td {
+	padding: 0.5vw;
+	text-align: center;
+	border-bottom: 1px solid #444;
+	font-size: 1vw;
+}
+th {
+	background: #111;
+	color: #fff;
+}
+input[type="text"], input[type="submit"] {
+	padding: 0.3vw 0.6vw;
+	margin: 0.3vw;
+	background: #222;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	font-size: 0.8vw;
+}
+a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 0.8vw;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+/* Blinking cursor with updated color */
+.cursor {
+    display: inline-block;
+    width: 5px;
+    background-color: #fff;
+    animation: blink 1s infinite;
+}
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    50.01%, 100% { opacity: 0; }
+}
+
+/* Optional typewriter effect */
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid #fff;
+  animation: typing 3.5s steps(40), blink .75s step-end infinite;
+}
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Centered beer menu container styled for a static screen effect */
+.container.menu {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 20px;
+	background-color: #000;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	z-index: 1;
+	box-sizing: border-box;
+	zoom: 0.8;
+}
+
+#root {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex-grow: 1;
+	overflow-y: auto;
+}
+
+#noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    display: block;
+}
+
+/* Horizontal line effect */
+@keyframes horizontalLine {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 0.5; }
+    90% { opacity: 0.5; }
+    100% { top: 100%; opacity: 0; }
+}
+.horizontal-line {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
+    animation: horizontalLine 5s infinite;
+    z-index: 2;
+}
+
+.horizontal-line-2 {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
+    animation: horizontalLine 7s infinite;
+    z-index: 2;
+}
+/* Responsive font size */
+@media (max-height: 800px) {
+	h1, h2 {
+		font-size: 0.8vw;
+	}
+	th, td {
+		font-size: 0.4vw;
+	}
+}
+@media (max-height: 600px) {
+	h1, h2 {
+		font-size: 0.6vw;
+	}
+	th, td {
+		font-size: 0.4vw;
+	}
+}
